@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Tribe_OAuth2_BE_Demo.config.Database;
+using Tribe_OAuth2_BE_Demo.Services;
 
 namespace Tribe_OAuth2_BE_Demo
 {
@@ -27,6 +29,9 @@ namespace Tribe_OAuth2_BE_Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            services.AddSingleton<IGoogleService, GoogleService>();
+            services.AddSingleton<IAuthService, AuthService>();
 
             //services.AddAuthentication().AddFacebook(facebookOptions =>
             //{
@@ -36,6 +41,10 @@ namespace Tribe_OAuth2_BE_Demo
             //    //Fields = { "name", "email" },
             //    //SaveTokens = true,
             //});
+
+            var connectionString = _configuration.GetValue<string>("DatabaseSettings:ConnectionString");
+            var migrationLocation = _configuration.GetValue<string>("DatabaseSettings:MigrationLocation");
+            EvolveInstaller.Configure(connectionString, migrationLocation);
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
@@ -56,9 +65,10 @@ namespace Tribe_OAuth2_BE_Demo
 
             // global cors policy
             app.UseCors(x => x
-                .AllowAnyOrigin()
+                .WithOrigins("http://localhost:4200")
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 

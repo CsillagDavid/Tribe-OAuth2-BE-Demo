@@ -10,7 +10,7 @@ namespace Tribe_OAuth2_BE_Demo.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OAuth2Controller : Controller
+    public class FacebookController : Controller
     {
         [HttpGet("random")]
         public int Get()
@@ -19,10 +19,10 @@ namespace Tribe_OAuth2_BE_Demo.Controllers
             return rng.Next(0, 100);
         }
 
-        [HttpGet("signin-facebook")]
+        [HttpGet("signin")]
         public string SignInFaceBook()
         {
-            return "FB_SignIn";
+            return "signin";
         }
 
         [HttpGet("sign-in")]
