@@ -31,5 +31,33 @@ namespace Tribe_OAuth2_BE_Demo.Controllers
                 return BadRequest(e);
             }
         }
+
+        [HttpPost("signUp")]
+        public async Task<IActionResult> Signup([FromBody] string creditenals)
+        {
+            try
+            {
+                var token = await _googleService.Signup(creditenals);
+                return Ok(token);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost("TestToken")]
+        public async Task<IActionResult> Proba([FromBody]string creditenals)
+        {
+            try
+            {
+                var retval = _googleService.TestToken(creditenals);
+                return Ok(retval);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }

@@ -1,33 +1,30 @@
 ﻿using EvolveDb;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Data.SqlClient;
 
 namespace Tribe_OAuth2_BE_Demo.config.Database
 {
-    public static class EvolveInstaller
+    public static class EvolveConfigurer
     {
-        public static void Configure(string connectionString, string migrationLocation)
+        public static void Configure(IConfiguration configuration)
         {
             try
             {
+                var connectionString = configuration.GetValue<string>("DatabaseSettings:ConnectionString");
+                var migrationLocation = configuration.GetValue<string>("DatabaseSettings:MigrationLocation");
+
                 var cnx = new SqlConnection(connectionString);
-                //var cnx = new SqliteConnection(Configuration.GetConnectionString("MyDatabase"));
-                var evolve = new Evolve(cnx)
+                var evolve = new Evolve(cnx, msg => Console.WriteLine(msg))
                 {
                     Locations = new[] { migrationLocation },
                     IsEraseDisabled = true,
                 };
-                //.Migrate(cnx, msg => Console.WriteLine(msg))
-                //{
-                //    Locations = new[] { migrationLocation },
-                //    IsEraseDisabled = true,
-                //};
 
                 evolve.Migrate();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
