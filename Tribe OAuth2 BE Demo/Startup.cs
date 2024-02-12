@@ -54,6 +54,8 @@ namespace Tribe_OAuth2_BE_Demo
             services.AddSingleton<ISessionRepository, SessionRepository>();
             services.AddSingleton<ISessionDataAdapter, SessionDataAdapter>();
 
+            services.AddSingleton<IUserService, UserService>();
+
             //services.AddSingleton<INHibernateRepository, NHibernateRepository>();
 
             var connectionString = _configuration.GetValue<string>("DatabaseSettings:ConnectionString");

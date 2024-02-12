@@ -11,7 +11,7 @@ namespace Tribe_OAuth2_BE_Demo.DtoMaps
     {
         public SessionDtoMap()
         {
-            Table("SESSION");
+            Table("SESSIONS");
 
             Id(x => x.SessionId).Column("SESSION_ID").GeneratedBy.Increment();
 

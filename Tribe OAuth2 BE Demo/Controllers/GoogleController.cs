@@ -46,13 +46,13 @@ namespace Tribe_OAuth2_BE_Demo.Controllers
             }
         }
 
-        [HttpPost("TestToken")]
-        public async Task<IActionResult> Proba([FromBody]string creditenals)
+        [HttpPost("loginWithOauth2")]
+        public async Task<IActionResult> LoginWithOauth2([FromBody] string code)
         {
             try
             {
-                var retval = _googleService.TestToken(creditenals);
-                return Ok(retval);
+                var token = await _googleService.LoginWithOauth2(code);
+                return Ok(token);
             }
             catch (Exception e)
             {

@@ -12,8 +12,8 @@ namespace Tribe_OAuth2_BE_Demo.Services
     {
         Task<dynamic> Login(string creditenal);
         Task<dynamic> Signup(string creditenal);
-
         public User NHibernate(string email);
         Task<dynamic> TestToken(string creditenals);
+        Task<dynamic> LoginWithOauth2(string code);
     }
 }
